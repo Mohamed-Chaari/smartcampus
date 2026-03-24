@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/spring-backend/target/
+/spring-backend/build/

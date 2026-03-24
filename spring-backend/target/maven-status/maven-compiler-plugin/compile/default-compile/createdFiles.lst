@@ -1,0 +1,10 @@
+com/isims/smartcampus/repository/EcoIssueRepository.class
+com/isims/smartcampus/exception/GlobalExceptionHandler.class
+com/isims/smartcampus/dto/ReportRequestDto.class
+com/isims/smartcampus/dto/GeminiAnalysisResult.class
+com/isims/smartcampus/entity/EcoIssue.class
+com/isims/smartcampus/dto/ReportResponseDto.class
+com/isims/smartcampus/SmartcampusApplication.class
+com/isims/smartcampus/controller/ReportController.class
+com/isims/smartcampus/service/ReportService.class
+com/isims/smartcampus/service/GeminiService.class

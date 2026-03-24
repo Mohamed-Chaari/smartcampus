@@ -1,0 +1,10 @@
+/app/spring-backend/src/main/java/com/isims/smartcampus/controller/ReportController.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/repository/EcoIssueRepository.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/dto/GeminiAnalysisResult.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/exception/GlobalExceptionHandler.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/service/ReportService.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/dto/ReportRequestDto.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/SmartcampusApplication.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/service/GeminiService.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/entity/EcoIssue.java
+/app/spring-backend/src/main/java/com/isims/smartcampus/dto/ReportResponseDto.java
