@@ -36,7 +36,9 @@ public class RelocationService {
         int occupancyPercent = (int) ((double) attendance / originalRoom.getCapacity() * 100);
         boolean hvacShutdown = occupancyPercent < OCCUPANCY_THRESHOLD_PERCENT;
 
-        List<Room> candidates = roomRepository.findAvailableRoomsWithLock(attendance);
+        // Find the smallest room that fits attendance with a 15% comfort buffer
+        int minCapacity = (int) Math.ceil(attendance * 1.15);
+        List<Room> candidates = roomRepository.findAvailableRoomsWithLock(minCapacity);
 
         Room suggestedRoom = candidates.stream()
                 .filter(r -> !r.getId().equals(originalRoom.getId()))

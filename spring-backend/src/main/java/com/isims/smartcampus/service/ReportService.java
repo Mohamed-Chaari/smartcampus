@@ -101,7 +101,10 @@ public class ReportService {
     }
 
     private void awardEcoPoints(String studentId, int points) {
-        campusUserRepository.incrementEcoPoints(studentId, points);
+        int updated = campusUserRepository.incrementEcoPoints(studentId, points);
+        if (updated == 0) {
+            throw new IllegalArgumentException("Cannot award eco-points: user not found: " + studentId);
+        }
     }
 
     private String saveImageLocally(MultipartFile image) throws IOException {
