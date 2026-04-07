@@ -20,7 +20,7 @@
         android:networkSecurityConfig="@xml/network_security_config">
 
         <activity
-            android:name=".ReportIssueActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +29,16 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".ReportIssueActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RelocationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EcoPointsActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

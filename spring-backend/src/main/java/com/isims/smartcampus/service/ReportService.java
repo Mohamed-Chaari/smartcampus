@@ -1,8 +1,12 @@
 package com.isims.smartcampus.service;
 
+import com.isims.smartcampus.dto.EcoIssueDto;
 import com.isims.smartcampus.dto.GeminiAnalysisResult;
 import com.isims.smartcampus.dto.ReportResponseDto;
+import com.isims.smartcampus.dto.UserPointsDto;
+import com.isims.smartcampus.entity.CampusUser;
 import com.isims.smartcampus.entity.EcoIssue;
+import com.isims.smartcampus.repository.CampusUserRepository;
 import com.isims.smartcampus.repository.EcoIssueRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,20 +17,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
 
     private final EcoIssueRepository ecoIssueRepository;
+    private final CampusUserRepository campusUserRepository;
     private final GeminiService geminiService;
     private final String uploadDir;
 
     public ReportService(
             EcoIssueRepository ecoIssueRepository,
+            CampusUserRepository campusUserRepository,
             GeminiService geminiService,
             @Value("${app.upload.dir}") String uploadDir) {
         this.ecoIssueRepository = ecoIssueRepository;
+        this.campusUserRepository = campusUserRepository;
         this.geminiService = geminiService;
         this.uploadDir = uploadDir;
     }
@@ -54,7 +63,10 @@ public class ReportService {
 
             EcoIssue savedIssue = ecoIssueRepository.save(issue);
 
-            // 5. Return Response
+            // 5. Award eco-points to the reporting user
+            awardEcoPoints(studentId, analysis.ecoPoints());
+
+            // 6. Return Response
             return new ReportResponseDto(
                     savedIssue.getId(),
                     savedIssue.getCategory(),
@@ -65,6 +77,32 @@ public class ReportService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to save report: " + e.getMessage(), e);
         }
+    }
+
+    public List<EcoIssueDto> getAllReports() {
+        return ecoIssueRepository.findAll().stream()
+                .map(i -> new EcoIssueDto(
+                        i.getId(),
+                        i.getDescription(),
+                        i.getStudentId(),
+                        i.getImageUrl(),
+                        i.getCategory(),
+                        i.getEcoPoints(),
+                        i.getReportedAt()))
+                .collect(Collectors.toList());
+    }
+
+    public UserPointsDto getUserPoints(String userId) {
+        CampusUser user = campusUserRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
+        return new UserPointsDto(user.getUserId(), user.getName(), user.getTotalEcoPoints());
+    }
+
+    private void awardEcoPoints(String studentId, int points) {
+        campusUserRepository.findByUserId(studentId).ifPresent(user -> {
+            user.setTotalEcoPoints(user.getTotalEcoPoints() + points);
+            campusUserRepository.save(user);
+        });
     }
 
     private String saveImageLocally(MultipartFile image) throws IOException {
