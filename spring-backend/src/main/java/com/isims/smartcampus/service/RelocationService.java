@@ -8,6 +8,7 @@ import com.isims.smartcampus.entity.Room;
 import com.isims.smartcampus.repository.RelocationRequestRepository;
 import com.isims.smartcampus.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class RelocationService {
         this.relocationRequestRepository = relocationRequestRepository;
     }
 
+    @Transactional
     public RelocationResponseDto requestRelocation(RelocationRequestDto dto) {
         Room originalRoom = roomRepository.findById(dto.originalRoomId())
                 .orElseThrow(() -> new IllegalArgumentException("Room not found: " + dto.originalRoomId()));
@@ -34,8 +36,7 @@ public class RelocationService {
         int occupancyPercent = (int) ((double) attendance / originalRoom.getCapacity() * 100);
         boolean hvacShutdown = occupancyPercent < OCCUPANCY_THRESHOLD_PERCENT;
 
-        List<Room> candidates = roomRepository
-                .findByCurrentlyOccupiedFalseAndCapacityGreaterThanEqualOrderByCapacityAsc(attendance);
+        List<Room> candidates = roomRepository.findAvailableRoomsWithLock(attendance);
 
         Room suggestedRoom = candidates.stream()
                 .filter(r -> !r.getId().equals(originalRoom.getId()))
@@ -55,6 +56,8 @@ public class RelocationService {
         if (suggestedRoom != null) {
             suggestedRoom.setCurrentlyOccupied(true);
             roomRepository.save(suggestedRoom);
+            originalRoom.setCurrentlyOccupied(false);
+            roomRepository.save(originalRoom);
         }
 
         String message = suggestedRoom != null

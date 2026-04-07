@@ -10,6 +10,7 @@ import com.isims.smartcampus.repository.CampusUserRepository;
 import com.isims.smartcampus.repository.EcoIssueRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class ReportService {
         this.uploadDir = uploadDir;
     }
 
+    @Transactional
     public ReportResponseDto saveReport(MultipartFile image, String description, String studentId) {
         try {
             // 1. Save Image Locally
@@ -99,10 +101,7 @@ public class ReportService {
     }
 
     private void awardEcoPoints(String studentId, int points) {
-        campusUserRepository.findByUserId(studentId).ifPresent(user -> {
-            user.setTotalEcoPoints(user.getTotalEcoPoints() + points);
-            campusUserRepository.save(user);
-        });
+        campusUserRepository.incrementEcoPoints(studentId, points);
     }
 
     private String saveImageLocally(MultipartFile image) throws IOException {
