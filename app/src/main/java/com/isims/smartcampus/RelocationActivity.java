@@ -43,6 +43,20 @@ public class RelocationActivity extends AppCompatActivity {
         textResultMessage = findViewById(R.id.text_result_message);
         textHvacStatus = findViewById(R.id.text_hvac_status);
 
+        // Security check and auto-fill
+        android.content.SharedPreferences prefs = getSharedPreferences("SmartCampusPrefs", android.content.Context.MODE_PRIVATE);
+        String role = prefs.getString("role", "");
+        String userId = prefs.getString("userId", "");
+
+        if (!"PROFESSOR".equals(role)) {
+            Toast.makeText(this, "Access Denied: Only Professors can request relocation.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        editProfessorId.setText(userId);
+        editProfessorId.setEnabled(false); // Prevent changing ID
+
         Button btnRequest = findViewById(R.id.btn_request_relocation);
         btnRequest.setOnClickListener(v -> requestRelocation());
     }

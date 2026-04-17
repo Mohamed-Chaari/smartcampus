@@ -31,9 +31,13 @@ public class ReportController {
     public ResponseEntity<ReportResponseDto> submitReport(
             @RequestParam("image") MultipartFile image,
             @RequestParam("description") String description,
-            @RequestParam("studentId") String studentId) {
+            @RequestParam("studentId") String studentId,
+            @RequestParam("location") String location,
+            @RequestParam("priority") String priority,
+            @RequestParam("equipmentType") String equipmentType) {
 
-        ReportResponseDto response = reportService.saveReport(image, description, studentId);
+        ReportResponseDto response = reportService.saveReport(
+                image, description, studentId, location, priority, equipmentType);
         return ResponseEntity.ok(response);
     }
 

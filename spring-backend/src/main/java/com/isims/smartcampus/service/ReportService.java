@@ -42,7 +42,8 @@ public class ReportService {
     }
 
     @Transactional
-    public ReportResponseDto saveReport(MultipartFile image, String description, String studentId) {
+    public ReportResponseDto saveReport(MultipartFile image, String description, String studentId,
+                                        String location, String priorityStr, String equipmentType) {
         try {
             // 1. Save Image Locally
             String filename = saveImageLocally(image);
@@ -55,6 +56,16 @@ public class ReportService {
             // 3. Call Gemini API
             GeminiAnalysisResult analysis = geminiService.analyzeImage(base64Image, description);
 
+            // Parse Priority
+            com.isims.smartcampus.entity.enums.IssuePriority priority = com.isims.smartcampus.entity.enums.IssuePriority.MEDIUM;
+            try {
+                if (priorityStr != null && !priorityStr.isEmpty()) {
+                    priority = com.isims.smartcampus.entity.enums.IssuePriority.valueOf(priorityStr.toUpperCase());
+                }
+            } catch (Exception e) {
+                // Keep default medium if parsing fails
+            }
+
             // 4. Save to Database
             EcoIssue issue = new EcoIssue();
             issue.setDescription(description);
@@ -62,6 +73,9 @@ public class ReportService {
             issue.setImageUrl(imageUrl);
             issue.setCategory(analysis.category());
             issue.setEcoPoints(analysis.ecoPoints());
+            issue.setLocation(location);
+            issue.setPriority(priority);
+            issue.setEquipmentType(equipmentType);
 
             EcoIssue savedIssue = ecoIssueRepository.save(issue);
 
@@ -90,7 +104,11 @@ public class ReportService {
                         i.getImageUrl(),
                         i.getCategory(),
                         i.getEcoPoints(),
-                        i.getReportedAt()))
+                        i.getReportedAt(),
+                        i.getPriority(),
+                        i.getStatus(),
+                        i.getLocation(),
+                        i.getEquipmentType()))
                 .collect(Collectors.toList());
     }
 

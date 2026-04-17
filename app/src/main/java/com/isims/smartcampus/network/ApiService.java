@@ -17,7 +17,10 @@ public interface ApiService {
     Call<ReportResponseDto> submitReport(
             @Part MultipartBody.Part image,
             @Part("description") RequestBody description,
-            @Part("studentId") RequestBody studentId
+            @Part("studentId") RequestBody studentId,
+            @Part("location") RequestBody location,
+            @Part("priority") RequestBody priority,
+            @Part("equipmentType") RequestBody equipmentType
     );
 
     @GET("api/reports/user/{userId}/points")
@@ -25,4 +28,7 @@ public interface ApiService {
 
     @POST("api/relocation/request")
     Call<RelocationResponseDto> requestRelocation(@Body RelocationRequestBody body);
+
+    @POST("api/auth/login")
+    Call<LoginResponseDto> login(@Body LoginRequestBody body);
 }

@@ -2,6 +2,7 @@ package com.isims.smartcampus.config;
 
 import com.isims.smartcampus.entity.CampusUser;
 import com.isims.smartcampus.entity.Room;
+import com.isims.smartcampus.entity.enums.UserRole;
 import com.isims.smartcampus.repository.CampusUserRepository;
 import com.isims.smartcampus.repository.RoomRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -27,12 +28,12 @@ public class DataInitializer {
             }
 
             if (campusUserRepository.count() == 0) {
-                campusUserRepository.save(createUser("STU-001", "Alice Dupont", CampusUser.UserRole.STUDENT));
-                campusUserRepository.save(createUser("STU-002", "Bob Martin", CampusUser.UserRole.STUDENT));
-                campusUserRepository.save(createUser("PROF-001", "Dr. Karim Ben Ali", CampusUser.UserRole.PROFESSOR));
-                campusUserRepository.save(createUser("PROF-002", "Dr. Sonia Khelifa", CampusUser.UserRole.PROFESSOR));
-                campusUserRepository.save(createUser("STAFF-001", "Maintenance Team", CampusUser.UserRole.STAFF));
-                campusUserRepository.save(createUser("ADMIN-001", "Campus Admin", CampusUser.UserRole.ADMIN));
+                campusUserRepository.save(createUser("STU-001", "Alice Dupont", UserRole.STUDENT, "1234"));
+                campusUserRepository.save(createUser("STU-002", "Bob Martin", UserRole.STUDENT, "1234"));
+                campusUserRepository.save(createUser("PROF-001", "Dr. Karim Ben Ali", UserRole.PROFESSOR, "1234"));
+                campusUserRepository.save(createUser("PROF-002", "Dr. Sonia Khelifa", UserRole.PROFESSOR, "1234"));
+                campusUserRepository.save(createUser("STAFF-001", "Maintenance Team", UserRole.MAINTENANCE, "1234"));
+                campusUserRepository.save(createUser("ADMIN-001", "Campus Admin", UserRole.ADMIN, "1234"));
             }
         };
     }
@@ -50,9 +51,10 @@ public class DataInitializer {
         return room;
     }
 
-    private CampusUser createUser(String userId, String name, CampusUser.UserRole role) {
+    private CampusUser createUser(String userId, String name, UserRole role, String password) {
         CampusUser user = new CampusUser();
         user.setUserId(userId);
+        user.setPassword(password);
         user.setName(name);
         user.setRole(role);
         user.setTotalEcoPoints(0);

@@ -1,5 +1,6 @@
 package com.isims.smartcampus.entity;
 
+import com.isims.smartcampus.entity.enums.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,6 +26,9 @@ public class CampusUser {
     private String userId;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -33,8 +37,4 @@ public class CampusUser {
 
     @Column(nullable = false)
     private Integer totalEcoPoints = 0;
-
-    public enum UserRole {
-        STUDENT, PROFESSOR, STAFF, ADMIN
-    }
 }

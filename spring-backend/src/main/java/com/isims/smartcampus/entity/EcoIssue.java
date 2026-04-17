@@ -1,6 +1,10 @@
 package com.isims.smartcampus.entity;
 
+import com.isims.smartcampus.entity.enums.IssuePriority;
+import com.isims.smartcampus.entity.enums.IssueStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +31,15 @@ public class EcoIssue {
     private String category;
     private Integer ecoPoints;
     private LocalDateTime reportedAt;
+
+    @Enumerated(EnumType.STRING)
+    private IssuePriority priority;
+
+    @Enumerated(EnumType.STRING)
+    private IssueStatus status = IssueStatus.PENDING;
+
+    private String location;
+    private String equipmentType;
 
     @PrePersist
     protected void onCreate() {
