@@ -1,184 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F4F8">
+    android:background="#F4F7F6">
 
-    <LinearLayout
-        android:id="@+id/main"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1976D2"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp"
+                android:elevation="8dp">
+
+                <TextView
+                    android:id="@+id/text_greeting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Hello, Student 👋"
+                    android:textColor="#BBDEFB"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="SmartCampus"
+                    android:textColor="#FFFFFF"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_greeting" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="2dp"
+                        app:strokeColor="#90CAF9">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:background="#FFFFFF"
+                            app:srcCompat="@drawable/isims_sfax_logo" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ISIMS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:paddingBottom="100dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Services Rapides"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#1976D2"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="4dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:text="📸"
+                            android:textSize="28sp"
+                            android:gravity="center"
+                            android:background="@drawable/ic_launcher_background"
+                            android:backgroundTint="#F1F8E9"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Report Eco-Issue"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Signalez les fuites, déchets, pannes et gagnez des points."
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_relocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:text="🏫"
+                            android:textSize="28sp"
+                            android:gravity="center"
+                            android:background="@drawable/ic_launcher_background"
+                            android:backgroundTint="#E3F2FD"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Smart Relocation"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Optimisation des salles selon la présence pour économiser l'énergie."
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_eco_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:text="🌟"
+                            android:textSize="28sp"
+                            android:gravity="center"
+                            android:background="@drawable/ic_launcher_background"
+                            android:backgroundTint="#FFF3E0"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="My Eco-Rewards"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Consultez votre solde de points et réclamez vos récompenses."
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_new_report"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:text="Signaler"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:iconTint="#FFFFFF"
+        app:backgroundTint="#F57F17"
+        app:elevation="6dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#2E7D32"
-            android:padding="24dp"
-            android:layout_marginBottom="24dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🌿 SmartCampus"
-                android:textColor="#FFFFFF"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UniEcoSync AI — Make Your Campus Smarter"
-                android:textColor="#C8E6C9"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="What would you like to do?"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Report Eco-Issue Card -->
-        <LinearLayout
-            android:id="@+id/card_report"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#FFFFFF"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
-            android:elevation="4dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="📸"
-                android:textSize="28sp"
-                android:gravity="center"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Report Eco-Issue"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#1B5E20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Snap &amp; report leaks, bins, pollution — earn EcoPoints!"
-                    android:textSize="13sp"
-                    android:textColor="#666666"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Smart Relocation Card -->
-        <LinearLayout
-            android:id="@+id/card_relocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#FFFFFF"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
-            android:elevation="4dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="🏫"
-                android:textSize="28sp"
-                android:gravity="center"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Smart Relocation"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#1B5E20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Low attendance? Move to a smaller room, save energy."
-                    android:textSize="13sp"
-                    android:textColor="#666666"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- My Eco-Points Card -->
-        <LinearLayout
-            android:id="@+id/card_eco_points"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#FFFFFF"
-            android:padding="16dp"
-            android:layout_marginBottom="24dp"
-            android:elevation="4dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="🌟"
-                android:textSize="28sp"
-                android:gravity="center"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="My Eco-Rewards"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#1B5E20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View your EcoPoints balance and rewards."
-                    android:textSize="13sp"
-                    android:textColor="#666666"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
