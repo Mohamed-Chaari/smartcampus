@@ -27,6 +27,8 @@ public class EcoPointsActivity extends AppCompatActivity {
     private TextView textUserName;
     private TextView textPoints;
 
+    private LinearLayout containerLeaderboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +39,56 @@ public class EcoPointsActivity extends AppCompatActivity {
         pointsCard = findViewById(R.id.points_card);
         textUserName = findViewById(R.id.text_user_name);
         textPoints = findViewById(R.id.text_points);
+        containerLeaderboard = findViewById(R.id.container_leaderboard);
+
+        // Pre-fill user ID
+        android.content.SharedPreferences prefs = getSharedPreferences("SmartCampusPrefs", android.content.Context.MODE_PRIVATE);
+        String userId = prefs.getString("userId", "");
+        editUserId.setText(userId);
 
         Button btnCheck = findViewById(R.id.btn_check_points);
         btnCheck.setOnClickListener(v -> checkPoints());
+
+        // Automatically load points and leaderboard
+        if (!userId.isEmpty()) {
+            checkPoints();
+        }
+        loadLeaderboard();
+    }
+
+    private void loadLeaderboard() {
+        ApiService apiService = RetrofitClient.getApiService();
+        apiService.getLeaderboard().enqueue(new Callback<java.util.List<UserPointsDto>>() {
+            @Override
+            public void onResponse(Call<java.util.List<UserPointsDto>> call, Response<java.util.List<UserPointsDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    containerLeaderboard.removeAllViews();
+                    java.util.List<UserPointsDto> leaderboard = response.body();
+                    
+                    int rank = 1;
+                    for (UserPointsDto student : leaderboard) {
+                        TextView tv = new TextView(EcoPointsActivity.this);
+                        tv.setText(rank + ". " + student.getName() + " (" + student.getUserId() + ") - " + student.getTotalEcoPoints() + " Pts");
+                        tv.setTextSize(16);
+                        tv.setPadding(0, 8, 0, 8);
+                        
+                        // Highlight top 3
+                        if (rank == 1) tv.setTextColor(android.graphics.Color.parseColor("#FFD700")); // Gold
+                        else if (rank == 2) tv.setTextColor(android.graphics.Color.parseColor("#C0C0C0")); // Silver
+                        else if (rank == 3) tv.setTextColor(android.graphics.Color.parseColor("#CD7F32")); // Bronze
+                        else tv.setTextColor(android.graphics.Color.DKGRAY);
+                        
+                        containerLeaderboard.addView(tv);
+                        rank++;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<java.util.List<UserPointsDto>> call, Throwable t) {
+                Toast.makeText(EcoPointsActivity.this, "Failed to load leaderboard", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void checkPoints() {
