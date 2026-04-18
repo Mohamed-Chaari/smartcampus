@@ -36,11 +36,10 @@ public class GeminiService {
         String prompt = """
                 You are an environmental issue classifier for a university campus.
                 Analyze this image and the following description: "%s"
-                If the image has absolutely zero relation to campus infrastructure, grounds, anomalies, or maintenance (e.g. a selfie, a coffee mug, or random unrelated item), classify it as SPAM.
                 Respond ONLY in valid JSON with exactly these keys:
                 {
-                  "category": "<one of: Waste, Energy, Water, Greenspace, Pollution, Spam, Other>",
-                  "ecoPoints": <integer between 0 and 100. Always 0 if Spam>,
+                  "category": "<one of: Waste, Energy, Water, Greenspace, Pollution, Other>",
+                  "ecoPoints": <integer between 10 and 100>,
                   "reasoning": "<one sentence>"
                 }
                 """.formatted(description);

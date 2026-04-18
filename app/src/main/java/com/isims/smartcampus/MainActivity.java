@@ -56,16 +56,17 @@ public class MainActivity extends AppCompatActivity {
             case "PROFESSOR":
                 cardReport.setVisibility(View.VISIBLE);
                 cardRelocation.setVisibility(View.VISIBLE);
+                cardEcoPoints.setVisibility(View.VISIBLE);
                 fabNewReport.setVisibility(View.VISIBLE);
                 break;
             case "ADMIN":
                 cardAdminMonitor.setVisibility(View.VISIBLE);
                 cardReport.setVisibility(View.VISIBLE);
-                cardAdminMonitor.setOnClickListener(v -> startActivity(new Intent(this, AdminDashboardActivity.class)));
+                cardAdminMonitor.setOnClickListener(v -> { /* TODO */ });
                 break;
             case "MAINTENANCE":
                 cardMaintenance.setVisibility(View.VISIBLE);
-                cardMaintenance.setOnClickListener(v -> startActivity(new Intent(this, MaintenanceDashboardActivity.class)));
+                cardMaintenance.setOnClickListener(v -> { /* TODO */ });
                 break;
         }
 
