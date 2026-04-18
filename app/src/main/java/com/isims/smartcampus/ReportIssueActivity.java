@@ -186,7 +186,7 @@ public class ReportIssueActivity extends AppCompatActivity {
                     if ("SPAM_REJECTED".equals(res.getCategory())) {
                         new androidx.appcompat.app.AlertDialog.Builder(ReportIssueActivity.this)
                             .setTitle("🛡️ Anti-Spam Triggered")
-                            .setMessage("Our AI detected that this image is not related to campus anomalies. Please upload a valid maintenance issue.\n\nDetails: " + res.getReasoning())
+                            .setMessage("Our AI detected that this image is not related to campus anomalies. Please upload a valid maintenance issue.\n\nDetails: " + res.getMessage())
                             .setPositiveButton("OK", null)
                             .show();
                         return;

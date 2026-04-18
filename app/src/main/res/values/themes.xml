@@ -1,9 +1,35 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Smart_Campus" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.Smart_Campus" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Main Colors -->
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryVariant">@color/brand_primary_variant</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorSecondaryVariant">@color/brand_secondary_variant</item>
+        
+        <!-- Backgrounds & Surfaces -->
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+
+        <!-- Status Colors -->
+        <item name="colorError">@color/state_error</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Component Overrides -->
+        <item name="materialCardViewStyle">@style/Widget.SmartCampus.CardView</item>
     </style>
 
     <style name="Theme.Smart_Campus" parent="Base.Theme.Smart_Campus" />
+
+    <!-- Custom Card Style for premium feel -->
+    <style name="Widget.SmartCampus.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardBackgroundColor">@color/surface_light</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="rippleColor">?attr/colorPrimary</item>
+    </style>
 </resources>
