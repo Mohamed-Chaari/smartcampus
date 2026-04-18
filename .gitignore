@@ -15,3 +15,12 @@
 local.properties
 /spring-backend/target/
 /spring-backend/build/
+# Java / Spring Boot
+spring-backend/target/
+
+# IDE
+.idea/
+*.iml
+
+# Android build
+app/build/
