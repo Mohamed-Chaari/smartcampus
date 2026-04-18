@@ -236,10 +236,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Free Printing (50 pages)"
+                            android:text="Free Printing (15 pages)"
+                            android:textColor="#333333"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
