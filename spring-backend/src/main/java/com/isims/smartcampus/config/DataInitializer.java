@@ -9,6 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
+
 @Configuration
 public class DataInitializer {
 
@@ -17,14 +22,32 @@ public class DataInitializer {
                                CampusUserRepository campusUserRepository) {
         return args -> {
             if (roomRepository.count() == 0) {
-                roomRepository.save(createRoom("Amphi A", "Main Building", 0, 300, Room.RoomType.AMPHITHEATER, true, false));
-                roomRepository.save(createRoom("Amphi B", "Main Building", 0, 250, Room.RoomType.AMPHITHEATER, true, false));
-                roomRepository.save(createRoom("Room 101", "Science Block", 1, 60, Room.RoomType.CLASSROOM, true, false));
-                roomRepository.save(createRoom("Room 102", "Science Block", 1, 60, Room.RoomType.CLASSROOM, true, false));
-                roomRepository.save(createRoom("Room 201", "Science Block", 2, 40, Room.RoomType.CLASSROOM, false, false));
-                roomRepository.save(createRoom("Lab 1", "Engineering Block", 1, 30, Room.RoomType.LAB, true, false));
-                roomRepository.save(createRoom("Lab 2", "Engineering Block", 2, 30, Room.RoomType.LAB, true, false));
-                roomRepository.save(createRoom("Room 301", "Humanities Block", 3, 50, Room.RoomType.CLASSROOM, true, false));
+                // Load rooms from CSV to ensure they match the schedule
+                Set<String> processedRooms = new HashSet<>();
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                        getClass().getResourceAsStream("/rooms.csv")))) {
+                    String line;
+                    br.readLine(); // skip header
+                    while ((line = br.readLine()) != null) {
+                        String[] parts = line.split(",");
+                        if (parts.length >= 6) {
+                            String name = parts[3];
+                            int capacity = Integer.parseInt(parts[5]);
+                            
+                            if (!processedRooms.contains(name)) {
+                                Room.RoomType type = name.toLowerCase().contains("amphi") ? 
+                                        Room.RoomType.AMPHITHEATER : Room.RoomType.CLASSROOM;
+                                
+                                roomRepository.save(createRoom(name, "ISIMS Campus", 0, capacity, type, true, false));
+                                processedRooms.add(name);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Fallback if CSV fails
+                    roomRepository.save(createRoom("Amphi A", "Main Building", 0, 300, Room.RoomType.AMPHITHEATER, true, false));
+                }
             }
 
             if (campusUserRepository.count() == 0) {
