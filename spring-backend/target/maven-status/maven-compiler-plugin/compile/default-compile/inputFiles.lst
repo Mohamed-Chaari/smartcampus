@@ -1,4 +1,5 @@
 /Users/MohamedChaari/AndroidStudioProjects/smartcampus/spring-backend/src/main/java/com/isims/smartcampus/dto/LoginResponseDto.java
+/Users/MohamedChaari/AndroidStudioProjects/smartcampus/spring-backend/src/main/java/com/isims/smartcampus/service/ScheduleService.java
 /Users/MohamedChaari/AndroidStudioProjects/smartcampus/spring-backend/src/main/java/com/isims/smartcampus/entity/Room.java
 /Users/MohamedChaari/AndroidStudioProjects/smartcampus/spring-backend/src/main/java/com/isims/smartcampus/controller/RelocationController.java
 /Users/MohamedChaari/AndroidStudioProjects/smartcampus/spring-backend/src/main/java/com/isims/smartcampus/entity/enums/UserRole.java

@@ -14,6 +14,7 @@ com/isims/smartcampus/entity/enums/IssueStatus.class
 com/isims/smartcampus/dto/RelocationRequestDto.class
 com/isims/smartcampus/repository/RoomRepository.class
 com/isims/smartcampus/repository/CampusUserRepository.class
+com/isims/smartcampus/service/ScheduleService.class
 com/isims/smartcampus/service/RelocationService.class
 com/isims/smartcampus/exception/GlobalExceptionHandler.class
 com/isims/smartcampus/entity/enums/UserRole.class
@@ -24,6 +25,7 @@ com/isims/smartcampus/SmartcampusApplication.class
 com/isims/smartcampus/entity/Room$RoomType.class
 com/isims/smartcampus/dto/LoginResponseDto.class
 com/isims/smartcampus/dto/RoomDto.class
+com/isims/smartcampus/service/ScheduleService$ScheduleEntry.class
 com/isims/smartcampus/entity/CampusUser.class
 com/isims/smartcampus/repository/RelocationRequestRepository.class
 com/isims/smartcampus/entity/enums/RelocationStatus.class
