@@ -45,6 +45,14 @@
             android:name=".EcoPointsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".MaintenanceDashboardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

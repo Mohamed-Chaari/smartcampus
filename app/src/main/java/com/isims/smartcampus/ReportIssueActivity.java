@@ -182,6 +182,16 @@ public class ReportIssueActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     ReportResponseDto res = response.body();
+                    
+                    if ("SPAM_REJECTED".equals(res.getCategory())) {
+                        new androidx.appcompat.app.AlertDialog.Builder(ReportIssueActivity.this)
+                            .setTitle("🛡️ Anti-Spam Triggered")
+                            .setMessage("Our AI detected that this image is not related to campus anomalies. Please upload a valid maintenance issue.\n\nDetails: " + res.getMessage())
+                            .setPositiveButton("OK", null)
+                            .show();
+                        return;
+                    }
+                    
                     String msg = "Success! Category: " + res.getCategory() +
                             "\nPoints: " + res.getEcoPoints();
                     Toast.makeText(ReportIssueActivity.this, msg, Toast.LENGTH_LONG).show();

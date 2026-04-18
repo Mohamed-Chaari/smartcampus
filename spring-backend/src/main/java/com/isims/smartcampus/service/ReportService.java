@@ -56,6 +56,10 @@ public class ReportService {
             // 3. Call Gemini API
             GeminiAnalysisResult analysis = geminiService.analyzeImage(base64Image, description);
 
+            if ("Spam".equalsIgnoreCase(analysis.category()) || analysis.ecoPoints() == 0) {
+                throw new IllegalArgumentException("SPAM_DETECTED: Image rejected. No valid campus anomaly detected.");
+            }
+
             // Parse Priority
             com.isims.smartcampus.entity.enums.IssuePriority priority = com.isims.smartcampus.entity.enums.IssuePriority.MEDIUM;
             try {
@@ -118,11 +122,29 @@ public class ReportService {
         return new UserPointsDto(user.getUserId(), user.getName(), user.getTotalEcoPoints());
     }
 
+    public List<UserPointsDto> getStudentLeaderboard() {
+        return campusUserRepository.findByRoleOrderByTotalEcoPointsDesc(com.isims.smartcampus.entity.enums.UserRole.STUDENT)
+                .stream()
+                .map(u -> new UserPointsDto(u.getUserId(), u.getName(), u.getTotalEcoPoints()))
+                .collect(Collectors.toList());
+    }
+
     private void awardEcoPoints(String studentId, int points) {
         int updated = campusUserRepository.incrementEcoPoints(studentId, points);
         if (updated == 0) {
             throw new IllegalArgumentException("Cannot award eco-points: user not found: " + studentId);
         }
+    }
+
+    public com.isims.smartcampus.dto.StatsDto getCampusStats() {
+        long totalAnomalies = ecoIssueRepository.count();
+        // Since we don't have custom count methods yet, filter directly for now
+        long pendingAnomalies = ecoIssueRepository.findAll().stream()
+                .filter(i -> com.isims.smartcampus.entity.enums.IssueStatus.PENDING.equals(i.getStatus()))
+                .count();
+        long totalRelocations = 3; // Placeholder until relocation repository is linked
+        
+        return new com.isims.smartcampus.dto.StatsDto(totalAnomalies, pendingAnomalies, totalRelocations);
     }
 
     private String saveImageLocally(MultipartFile image) throws IOException {
@@ -140,5 +162,16 @@ public class ReportService {
         image.transferTo(filePath.toFile());
 
         return newFilename;
+    }
+
+    @Transactional
+    public EcoIssueDto updateIssueStatus(Long issueId, com.isims.smartcampus.entity.enums.IssueStatus newStatus) {
+        EcoIssue issue = ecoIssueRepository.findById(issueId)
+                .orElseThrow(() -> new IllegalArgumentException("Issue not found"));
+        issue.setStatus(newStatus);
+        EcoIssue saved = ecoIssueRepository.save(issue);
+        return new EcoIssueDto(saved.getId(), saved.getDescription(), saved.getStudentId(), saved.getImageUrl(),
+                saved.getCategory(), saved.getEcoPoints(), saved.getReportedAt(), saved.getPriority(), saved.getStatus(),
+                saved.getLocation(), saved.getEquipmentType());
     }
 }
