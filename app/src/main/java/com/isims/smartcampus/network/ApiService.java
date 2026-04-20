@@ -16,11 +16,11 @@ public interface ApiService {
     @POST("api/reports/submit")
     Call<ReportResponseDto> submitReport(
             @Part MultipartBody.Part image,
-            @Part("description") RequestBody description,
-            @Part("studentId") RequestBody studentId,
-            @Part("location") RequestBody location,
-            @Part("priority") RequestBody priority,
-            @Part("equipmentType") RequestBody equipmentType
+            @Part MultipartBody.Part description,
+            @Part MultipartBody.Part studentId,
+            @Part MultipartBody.Part location,
+            @Part MultipartBody.Part priority,
+            @Part MultipartBody.Part equipmentType
     );
 
     @GET("api/reports/user/{userId}/points")

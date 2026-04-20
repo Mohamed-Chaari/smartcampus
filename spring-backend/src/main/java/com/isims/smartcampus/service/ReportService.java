@@ -45,13 +45,13 @@ public class ReportService {
     public ReportResponseDto saveReport(MultipartFile image, String description, String studentId,
                                         String location, String priorityStr, String equipmentType) {
         try {
-            // 1. Save Image Locally
-            String filename = saveImageLocally(image);
-            String imageUrl = "/" + uploadDir + "/" + filename;
-
-            // 2. Convert to Base64 for Gemini
+            // 1. Convert to Base64 for Gemini first (before stream is closed by transferTo)
             byte[] imageBytes = image.getBytes();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+            // 2. Save Image Locally
+            String filename = saveImageLocally(image);
+            String imageUrl = "/api/uploads/" + filename;
 
             // 3. Call Gemini API
             GeminiAnalysisResult analysis = geminiService.analyzeImage(base64Image, description);
@@ -119,9 +119,13 @@ public class ReportService {
     }
 
     private void awardEcoPoints(String studentId, int points) {
-        int updated = campusUserRepository.incrementEcoPoints(studentId, points);
-        if (updated == 0) {
-            throw new IllegalArgumentException("Cannot award eco-points: user not found: " + studentId);
+        try {
+            int updated = campusUserRepository.incrementEcoPoints(studentId, points);
+            if (updated == 0) {
+                System.err.println("Cannot award eco-points: user not found: " + studentId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error awarding eco-points: " + e.getMessage());
         }
     }
 
