@@ -37,7 +37,20 @@ public class RelocationService {
     @Transactional
     public RelocationResponseDto requestRelocation(RelocationRequestDto dto) {
         Room originalRoom = roomRepository.findById(dto.originalRoomId())
-                .orElseThrow(() -> new IllegalArgumentException("Room not found: " + dto.originalRoomId()));
+                .orElse(null);
+
+        if (originalRoom == null) {
+            return new RelocationResponseDto(
+                    null,
+                    "Unknown",
+                    dto.reportedAttendance(),
+                    null,
+                    null,
+                    null,
+                    false,
+                    "Error: The specified original room ID " + dto.originalRoomId() + " does not exist."
+            );
+        }
 
         int attendance = dto.reportedAttendance();
         int occupancyPercent = (int) ((double) attendance / originalRoom.getCapacity() * 100);

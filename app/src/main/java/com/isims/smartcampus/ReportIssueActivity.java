@@ -166,11 +166,13 @@ public class ReportIssueActivity extends AppCompatActivity {
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpeg"), photoFile);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", photoFile.getName(), reqFile);
 
-        RequestBody descPart = RequestBody.create(MediaType.parse("text/plain"), description);
-        RequestBody studentIdPart = RequestBody.create(MediaType.parse("text/plain"), userId);
-        RequestBody locationPart = RequestBody.create(MediaType.parse("text/plain"), location);
-        RequestBody priorityPart = RequestBody.create(MediaType.parse("text/plain"), priority);
-        RequestBody equipmentPart = RequestBody.create(MediaType.parse("text/plain"), equipmentType);
+        // Retrofit @Part("name") RequestBody can sometimes include unwanted quotes if not careful.
+        // Using MultipartBody.Part directly for text fields to be safer in some environments.
+        MultipartBody.Part descPart = MultipartBody.Part.createFormData("description", description);
+        MultipartBody.Part studentIdPart = MultipartBody.Part.createFormData("studentId", userId);
+        MultipartBody.Part locationPart = MultipartBody.Part.createFormData("location", location);
+        MultipartBody.Part priorityPart = MultipartBody.Part.createFormData("priority", priority);
+        MultipartBody.Part equipmentPart = MultipartBody.Part.createFormData("equipmentType", equipmentType);
 
         progressBar.setVisibility(View.VISIBLE);
 
